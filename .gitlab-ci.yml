@@ -34,7 +34,7 @@ test-infra:
     - helm version
     - kubectl version --short
     - yc config set service-account-key $YC_TOKEN
-    - yc compute instance list
+    - yc managed-kubernetes cluster get-credentials test-cluster --external --force
 
 deploy:
   stage: deploy
