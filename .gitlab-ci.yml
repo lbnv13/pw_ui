@@ -32,6 +32,8 @@ test-infra:
   image: ${CI_REGISTRY}/project_dev/infra:latest
   script:
     - helm version
+    - kubectl version --short
+    - helm ls -a
 
 deploy:
   stage: deploy
