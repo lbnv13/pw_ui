@@ -33,7 +33,8 @@ test-infra:
   script:
     - helm version
     - kubectl version --short
-    - helm ls -a
+    - yc init --token ${YC_TOKEN}
+    - yc compute instance list
 
 deploy:
   stage: deploy
