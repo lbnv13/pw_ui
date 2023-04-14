@@ -29,7 +29,7 @@ test:
     - coverage report --include ui/ui.py
 
 test-infra:
-  image: infra:latest
+  image: ${CI_REGISTRY}/infra:latest
   script:
     - helm version
 
