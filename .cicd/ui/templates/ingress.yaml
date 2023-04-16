@@ -27,7 +27,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: ui."{{ .Values.deployment }}.158.160.100.96.nip.io"
+  - host: "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
     http:
       paths:
       - pathType: Prefix
