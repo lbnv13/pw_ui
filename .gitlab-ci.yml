@@ -28,16 +28,26 @@ test:
     - coverage run -m unittest discover -s tests/ 
     - coverage report --include ui/ui.py
 
-test-infra:
+deploy_to_stage:
+  stage: deploy
   image: ${CI_REGISTRY}/project_dev/infra:latest
+  variables:
+    deploy_variable: "dev"
   script:
-    - helm version
-    - kubectl version --short
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
+    - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable}
 
-deploy:
+deploy_to_prod:
   stage: deploy
+  image: ${CI_REGISTRY}/project_dev/infra:latest
+  variables:
+    deploy_variable: "prod"
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+      variables:
+        deploy_variable: "prod" 
   script:
-    - echo 'DEPLOYED!'
-    
+    - yc config set service-account-key $YC_TOKEN
+    - yc managed-kubernetes cluster get-credentials test-cluster --external --force
+    - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable}
