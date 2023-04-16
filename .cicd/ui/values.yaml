@@ -1,1 +1,2 @@
 deployment: dev
+build : latest

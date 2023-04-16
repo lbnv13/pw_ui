@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ui
-        image: lbnvd13.gitlab.yandexcloud.net:5050/project_dev/search_engine_ui:latest
+        image: lbnvd13.gitlab.yandexcloud.net:5050/project_dev/search_engine_ui:{.Values.build }
         env:
         - name: MONGO
           value: "mongodb.mongodb"
