@@ -37,7 +37,7 @@ deploy_to_stage:
   script:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
-    - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set build=${CI_COMMIT_SHORT_SHA}
+    - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set image=${CI_COMMIT_SHORT_SHA}
 
 deploy_to_prod:
   stage: deploy_prod
@@ -52,5 +52,4 @@ deploy_to_prod:
   script:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
-    - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set build=${CI_COMMIT_SHORT_SHA}
-
+    - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set image=${CI_COMMIT_SHORT_SHA}
