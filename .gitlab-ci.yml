@@ -28,14 +28,6 @@ test:
     - coverage run -m unittest discover -s tests/ 
     - coverage report --include ui/ui.py
 
-test-infra:
-  image: ${CI_REGISTRY}/project_dev/infra:latest
-  script:
-    - helm version
-    - kubectl version --short
-    - yc config set service-account-key $YC_TOKEN
-    - yc managed-kubernetes cluster get-credentials test-cluster --external --force
-
 deploy_to_stage:
   stage: deploy
   image: ${CI_REGISTRY}/project_dev/infra:latest
