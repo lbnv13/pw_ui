@@ -51,3 +51,4 @@ deploy_to_prod:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
     - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable}
+
