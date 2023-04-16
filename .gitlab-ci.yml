@@ -17,7 +17,7 @@ build:
             /kaniko/executor
             --context "${CI_PROJECT_DIR}"
             --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-            --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_TAG}"
+            --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_SHORT_SHA}"
 
 test:
   stage: test
@@ -30,7 +30,7 @@ test:
 
 deploy_to_stage:
   stage: deploy
-  image: ${CI_REGISTRY}/project_dev/infra:latest
+  image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_SHORT_SHA}
   variables:
     deploy_variable: "dev"
   script:
