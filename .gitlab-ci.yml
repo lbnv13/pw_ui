@@ -34,7 +34,6 @@ deploy_to_stage:
   image: ${CI_REGISTRY}/project_dev/infra:latest
   variables:
     deploy_variable: "dev"
-  when: manual
   script:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
@@ -48,7 +47,8 @@ deploy_to_prod:
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
       variables:
-        deploy_variable: "prod" 
+        deploy_variable: "prod"
+  when: manual
   script:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
