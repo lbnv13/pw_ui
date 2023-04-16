@@ -30,7 +30,7 @@ test:
 
 deploy_to_stage:
   stage: deploy
-  image: ${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_SHORT_SHA}
+  image: ${CI_REGISTRY}/project_dev/infra:latest
   variables:
     deploy_variable: "dev"
   script:
