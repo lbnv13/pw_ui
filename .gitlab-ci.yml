@@ -1,7 +1,8 @@
 stages:
   - build
   - test
-  - deploy
+  - deploy_stage
+  - deploy_prod
 
 
 build:
@@ -29,7 +30,7 @@ test:
     - coverage report --include ui/ui.py
 
 deploy_to_stage:
-  stage: deploy
+  stage: deploy_stage
   image: ${CI_REGISTRY}/project_dev/infra:latest
   variables:
     deploy_variable: "dev"
@@ -39,7 +40,7 @@ deploy_to_stage:
     - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set build=${CI_COMMIT_SHORT_SHA}
 
 deploy_to_prod:
-  stage: deploy
+  stage: deploy_prod
   image: ${CI_REGISTRY}/project_dev/infra:latest
   variables:
     deploy_variable: "prod"

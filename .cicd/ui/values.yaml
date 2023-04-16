@@ -1,2 +1,2 @@
 deployment: dev
-build : latest
+image : latest
