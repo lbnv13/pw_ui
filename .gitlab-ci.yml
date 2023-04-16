@@ -33,11 +33,10 @@ deploy_to_stage:
   image: ${CI_REGISTRY}/project_dev/infra:latest
   variables:
     deploy_variable: "dev"
-
   script:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
-    - helm upgrade --install -n ${deploy_variable} crawler ./.cicd/crawler --set deployment=${deploy_variable}
+    - helm upgrade --install -n ${deploy_variable} crawler ./.cicd/ui --set deployment=${deploy_variable}
 
 deploy_to_prod:
   stage: deploy
