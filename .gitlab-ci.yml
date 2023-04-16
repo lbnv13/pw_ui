@@ -36,7 +36,27 @@ test-infra:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
 
-deploy:
+deploy_to_stage:
   stage: deploy
+  image: ${CI_REGISTRY}/project_dev/infra:latest
+  variables:
+    deploy_variable: "dev"
+
   script:
-    - echo 'DEPLOYED!'
+    - yc config set service-account-key $YC_TOKEN
+    - yc managed-kubernetes cluster get-credentials test-cluster --external --force
+    - helm upgrade --install -n ${deploy_variable} crawler ./.cicd/crawler --set deployment=${deploy_variable}
+
+deploy_to_prod:
+  stage: deploy
+  image: ${CI_REGISTRY}/project_dev/infra:latest
+  variables:
+    deploy_variable: "prod"
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+      variables:
+        deploy_variable: "prod" 
+  script:
+    - yc config set service-account-key $YC_TOKEN
+    - yc managed-kubernetes cluster get-credentials test-cluster --external --force
+    - helm upgrade --install -n ${deploy_variable} crawler ./.cicd/crawler --set deployment=${deploy_variable}
