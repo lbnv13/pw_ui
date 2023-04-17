@@ -4,7 +4,9 @@ metadata:
   name: ui-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    {{- if eq .Values.deployment "prod" }}
     cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.deployment }}"
+    {{- end }}
 spec:
 {{- if eq .Values.deployment "prod" }}
   tls:
