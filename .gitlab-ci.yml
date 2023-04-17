@@ -59,6 +59,7 @@ deploy_to_prod:
 
 notify_error:
   stage: notify
+  image: ${CI_REGISTRY}/project_dev/infra:latest
   script:
   - sh ./.cicd/.ci-notify.sh ❌
   when: on_failure
