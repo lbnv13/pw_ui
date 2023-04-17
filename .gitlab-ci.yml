@@ -3,6 +3,7 @@ stages:
   - test
   - deploy_stage
   - deploy_prod
+  - notify
 
 
 build:
@@ -38,6 +39,7 @@ deploy_to_stage:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
     - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set image=${CI_COMMIT_SHORT_SHA}
+    - sh ./.cicd/.ci-notify.sh stage_deploy✅
 
 deploy_to_prod:
   stage: deploy_prod
@@ -53,3 +55,10 @@ deploy_to_prod:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
     - helm upgrade --install -n ${deploy_variable} ui ./.cicd/ui --set deployment=${deploy_variable} --set image=${CI_COMMIT_SHORT_SHA}
+    - sh ./.cicd/.ci-notify.sh prod_deploy ✅
+
+notify_error:
+  stage: notify
+  script:
+  - sh ./.cicd/.ci-notify.sh ❌
+  when: on_failure
