@@ -29,7 +29,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "158.160.100.96.nip.io"
+      - "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
       secretName: letsencrypt
   rules:
   - host: "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
