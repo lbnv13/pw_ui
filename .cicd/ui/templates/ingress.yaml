@@ -4,16 +4,14 @@ metadata:
   name: ui-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    {{- if .Values.tls }}
     cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.deployment }}"
-    {{- end }}
 spec:
-  {{- if .Values.tls }}
+{{- if eq .Values.deployment "prod" }}
   tls:
     - hosts:
       - "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
       secretName: letsencrypt-{{ .Values.deployment }}
-  {{- end }}
+{{- end }}
   rules:
   - host: "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
     http:
