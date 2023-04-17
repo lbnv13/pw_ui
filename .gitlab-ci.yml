@@ -5,7 +5,6 @@ stages:
   - deploy_prod
   - notify
 
-
 build:
     stage: build
     image:
