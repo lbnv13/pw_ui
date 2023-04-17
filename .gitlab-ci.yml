@@ -34,7 +34,7 @@ deploy_to_stage:
   stage: deploy_stage
   image: ${CI_REGISTRY}/project_dev/infra:latest
   variables:
-    deploy_variable: "dev"
+    deploy_variable: "stage"
   script:
     - yc config set service-account-key $YC_TOKEN
     - yc managed-kubernetes cluster get-credentials test-cluster --external --force
