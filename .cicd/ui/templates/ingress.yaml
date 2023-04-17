@@ -9,7 +9,7 @@ spec:
   tls:
     - hosts:
       - "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
-      secretName: letsencrypt
+      secretName: letsencrypt-{{ .Values.deployment }}
   rules:
   - host: "ui.{{ .Values.deployment }}.158.160.100.96.nip.io"
     http:
